@@ -1,5 +1,9 @@
 package effects.audio;
 
 public class Main {
-	static void main() {}
+	public static Window window;
+	
+	static void main() {
+		Window.init();
+	}
 }
