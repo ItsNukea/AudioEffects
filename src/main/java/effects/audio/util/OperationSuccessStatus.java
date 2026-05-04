@@ -1,0 +1,10 @@
+package effects.audio.util;
+
+public enum OperationSuccessStatus {
+	SUCCESS,
+	FILE_NOT_SELECTED,
+	EFFECT_TO_APPLY_NOT_SELECTED,
+	IO_ERROR,
+	EFFECT_APPLICATION_FAILED,
+	FILE_READ_FAILED
+}
