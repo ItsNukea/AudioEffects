@@ -1,11 +1,17 @@
 package effects.audio;
 
-import javax.sound.sampled.AudioSystem;
-import java.util.Arrays;
+import org.slf4j.*;
 
 public class Main {
+	public static final Logger LOGGER = LoggerFactory.getLogger("Audio Effects");
+
 	static void main() {
+		LOGGER.debug("(Debug message)");
+		LOGGER.info("(Info message)");
+		LOGGER.warn("(Warn message)");
+		LOGGER.error("(Error message)");
+
 		Window.init();
-		System.out.println(Arrays.toString(AudioSystem.getAudioFileTypes()));
+		//LOGGER.debug(Arrays.toString(AudioSystem.getAudioFileTypes()));
 	}
 }

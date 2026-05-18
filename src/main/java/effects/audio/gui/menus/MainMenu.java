@@ -1,6 +1,6 @@
 package effects.audio.gui.menus;
 
-import effects.audio.EffectTypes;
+import effects.audio.EffectType;
 import effects.audio.io.FileSelector;
 import effects.audio.effectoperations.EffectOperationManager;
 
@@ -15,7 +15,7 @@ public class MainMenu extends JPanel {
 	private final JPopupMenu effectSelection;
 	
 	private File selectedFile;
-	private EffectTypes selectedEffect;
+	private EffectType selectedEffect;
 	
 	public MainMenu() {
 		super();
@@ -30,14 +30,14 @@ public class MainMenu extends JPanel {
 		selectFileButton.setBounds(400, 350, 200, 50);
 		
 		performOperationButton = new JButton("Go!");
-		performOperationButton.addActionListener(_ -> EffectOperationManager.init(this));  //TODO: Perform operation
+		performOperationButton.addActionListener(_ -> EffectOperationManager.init());  //TODO: Perform operation
 		performOperationButton.setBounds(580, 500, 100, 50);
 		performOperationButton.setEnabled(false);
 		
 		effectSelection = new JPopupMenu("Select an effect");
 		effectSelection.setLayout(null);
 
-		for(EffectTypes type : EffectTypes.values()) {
+		for(EffectType type : EffectType.values()) {
 			JMenuItem item = new JMenuItem(type.getPrettyName());
 			item.addActionListener(_ -> {
 				selectedEffect = type;
@@ -74,7 +74,7 @@ public class MainMenu extends JPanel {
 	
 	public void updateButtonNames() {
 		String selectEffectTitle = "Select an effect";
-		selectEffectButton.setText(selectedEffect == null ? selectEffectTitle : selectedEffect.name());
+		selectEffectButton.setText(selectedEffect == null ? selectEffectTitle : selectedEffect.getPrettyName());
 		Rectangle bounds = selectedEffect == null ? new Rectangle(0, 0, 0, 0) : selectEffectButton.getBounds(); //FIXME: not good
 
 		selectFileButton.setText(selectedFile == null ? "Choose your audio" : selectedFile.getName());
@@ -86,7 +86,7 @@ public class MainMenu extends JPanel {
 		return selectedFile;
 	}
 	
-	public EffectTypes getSelectedEffect() {
+	public EffectType getSelectedEffect() {
 		return selectedEffect;
 	}
 

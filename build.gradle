@@ -2,20 +2,46 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.gradleup.shadow' version '8.3.6'
 }
 
 group = 'com.effects.audio'
-version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation "org.slf4j:slf4j-api:$slf4j_version"
+    implementation "ch.qos.logback:logback-classic:$logback_version"
 }
+
+application {
+    mainClass = 'effects.audio.Main'
+}
+
+jar {
+    archiveBaseName = "${archivesName}"
+
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass.get()
+        )
+    }
+}
+
+shadowJar {
+    archiveFileName = "${archivesName}.jar"
+}
+
+tasks.register('copyJar', Copy) {
+    dependsOn shadowJar
+
+    from shadowJar.archiveFile
+    into layout.projectDirectory.dir("downloads")
+}
+
+shadowJar.finalizedBy copyJar
 
 test {
     useJUnitPlatform()
