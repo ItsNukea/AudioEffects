@@ -1,18 +1,16 @@
 package effects.audio.io;
 
+import effects.audio.Main;
 import javafx.application.Platform;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FileSelector {
-	private static boolean javafxStarted = false;
-
 	public static File get() {
-		startJavaFXIfNeeded();
-
 		AtomicReference<File> selectedFile = new AtomicReference<>();
 		CountDownLatch latch = new CountDownLatch(1);
 
@@ -31,6 +29,7 @@ public class FileSelector {
 								"*.mp3"
 						)
 				);
+				chooser.setInitialDirectory(Paths.get(System.getProperty("user.home"), "Downloads").toFile());
 
 				selectedFile.set(chooser.showOpenDialog(null));
 			} finally {
@@ -46,14 +45,7 @@ public class FileSelector {
 		}
 
 		File file = selectedFile.get();
-		System.out.println("Selected file: " + (file == null ? "null" : file.getName()));
+        Main.LOGGER.info("Selected file: {}", file == null ? "null" : file.getName());
 		return file;
-	}
-
-	private static synchronized void startJavaFXIfNeeded() {
-		if (!javafxStarted) {
-			Platform.startup(() -> {});
-			javafxStarted = true;
-		}
 	}
 }

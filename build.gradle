@@ -21,7 +21,7 @@ application {
 }
 
 jar {
-    archiveBaseName = "${archivesName}"
+    archiveBaseName = "${archivesName}-${version}"
 
     manifest {
         attributes(
@@ -31,17 +31,35 @@ jar {
 }
 
 shadowJar {
-    archiveFileName = "${archivesName}.jar"
+    archiveFileName = "${archivesName}-${version}.jar"
 }
 
-tasks.register('copyJar', Copy) {
+// jpackage task
+tasks.register('jpackage', Exec) {
     dependsOn shadowJar
 
-    from shadowJar.archiveFile
-    into layout.projectDirectory.dir("downloads")
+    File outputDir = layout.buildDirectory.dir('installer').get().asFile
+    File inputDir = layout.buildDirectory.dir('libs').get().asFile
+    String jarName = "${archivesName}-${version}.jar"
+
+    doFirst {
+        outputDir.mkdirs()
+    }
+
+    commandLine 'jpackage',
+            '--type',         'exe',
+            '--name',         'Audio Effects',
+            '--app-version',  '1.0',
+            '--input',        inputDir.absolutePath,
+            '--main-jar',     jarName,
+            '--main-class',   application.mainClass.get(),
+            '--dest',         outputDir.absolutePath,
+            '--icon',      'src/main/resources/sprites/icon.ico',
+            '--win-menu',
+            '--win-shortcut'
 }
 
-shadowJar.finalizedBy copyJar
+shadowJar.finalizedBy jpackage
 
 test {
     useJUnitPlatform()

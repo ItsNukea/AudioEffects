@@ -1,8 +1,8 @@
 package effects.audio.gui.menus;
 
-import effects.audio.EffectType;
+import effects.audio.*;
+import effects.audio.Window;
 import effects.audio.io.FileSelector;
-import effects.audio.effectoperations.EffectOperationManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +18,7 @@ public class MainMenu extends JPanel {
 	private EffectType selectedEffect;
 	
 	public MainMenu() {
-		super();
-		setLayout(null);
-
+		super(null);
 		String selectFileTitle = "Choose your audio";
 		selectFileButton = new JButton(selectFileTitle);
 		selectFileButton.addActionListener(_ -> {
@@ -30,7 +28,7 @@ public class MainMenu extends JPanel {
 		selectFileButton.setBounds(400, 350, 200, 50);
 		
 		performOperationButton = new JButton("Go!");
-		performOperationButton.addActionListener(_ -> EffectOperationManager.init());  //TODO: Perform operation
+		performOperationButton.addActionListener(_ -> Window.setWindow(new ParameterMenu(selectedEffect)));
 		performOperationButton.setBounds(580, 500, 100, 50);
 		performOperationButton.setEnabled(false);
 		
@@ -75,19 +73,8 @@ public class MainMenu extends JPanel {
 	public void updateButtonNames() {
 		String selectEffectTitle = "Select an effect";
 		selectEffectButton.setText(selectedEffect == null ? selectEffectTitle : selectedEffect.getPrettyName());
-		Rectangle bounds = selectedEffect == null ? new Rectangle(0, 0, 0, 0) : selectEffectButton.getBounds(); //FIXME: not good
-
 		selectFileButton.setText(selectedFile == null ? "Choose your audio" : selectedFile.getName());
-
 		performOperationButton.setEnabled(selectedFile != null && selectedEffect != null);
-	}
-	
-	public File getSelectedFile() {
-		return selectedFile;
-	}
-	
-	public EffectType getSelectedEffect() {
-		return selectedEffect;
 	}
 
 	private static int getStringWidth(String text, Graphics2D graphics, Font font) {
