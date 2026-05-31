@@ -28,7 +28,7 @@ public class MainMenu extends JPanel {
 		selectFileButton.setBounds(400, 350, 200, 50);
 		
 		performOperationButton = new JButton("Go!");
-		performOperationButton.addActionListener(_ -> Window.setWindow(new ParameterMenu(selectedEffect)));
+		performOperationButton.addActionListener(_ -> Window.setWindow(new ParameterMenu(selectedEffect, selectedFile)));
 		performOperationButton.setBounds(580, 500, 100, 50);
 		performOperationButton.setEnabled(false);
 		

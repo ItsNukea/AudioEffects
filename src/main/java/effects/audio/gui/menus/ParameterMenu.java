@@ -2,42 +2,64 @@ package effects.audio.gui.menus;
 
 import effects.audio.*;
 import effects.audio.Window;
+import effects.audio.effectoperations.EffectOperationManager;
 import effects.audio.params.Parameter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class ParameterMenu extends JPanel implements KeyListener {
     public EffectType effectType;
+    public File selectedFile;
 
-    public ParameterMenu(EffectType effectType) {
-        super(new GridLayout(5, 5));
-        Main.LOGGER.info("Initializing parameter menu");
-        GridLayout layout = new GridLayout(effectType.getParameters().size(), 2);
-        layout.setHgap(10);
-        layout.setVgap(10);
-        setLayout(layout);
+    public ParameterMenu(EffectType effectType, File selectedFile) {
+        setLayout(new BorderLayout(0, 10));
+        setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        this.effectType = effectType;
+        // --- Parameter grid ---
+        JPanel gridPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        for(Parameter<?> parameter : effectType.getParameters()) {
-            JLabel label = new JLabel(parameter.key);
-            label.setSize(new Dimension(500, 20));
-            label.setHorizontalAlignment(JLabel.RIGHT);
+        int row = 0;
+        for (Parameter<?> parameter : effectType.getParameters()) {
+            // Label (right-aligned)
+            gbc.gridx = 0;
+            gbc.gridy = row;
+            gbc.weightx = 0.3;
+            gbc.anchor = GridBagConstraints.LINE_END;
+            JLabel label = new JLabel(parameter.key + ":");
+            gridPanel.add(label, gbc);
 
-            JTextField field = new JTextField();
-            field.setSize(new Dimension(50, 20));
-            field.setText(parameter.value.toString());
-            field.setEditable(true);
-            field.setSize(new Dimension(100, 20));
+            // Field
+            gbc.gridx = 1;
+            gbc.weightx = 0.7;
+            gbc.anchor = GridBagConstraints.LINE_START;
+            JTextField field = new JTextField(parameter.value.toString(), 20);
+            gridPanel.add(field, gbc);
 
-            add(label);
-            add(field);
+            row++;
         }
 
-        int padding = 20;
-        setPreferredSize(new Dimension(200, (effectType.getParameters().size() + padding) * 20 - padding));
+        // --- Button bar ---
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        JButton goButton = new JButton("Go!");
+        goButton.setPreferredSize(new Dimension(90, 28));
+        goButton.addActionListener(_ -> {
+            LoadingScreen screen = new LoadingScreen(effectType, selectedFile);
+            Window.setWindow(screen);
+            EffectOperationManager.init(screen);
+        });
+        buttonPanel.add(goButton);
+
+        add(gridPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+
+        this.effectType = effectType;
+        this.selectedFile = selectedFile;
     }
 
     @Override

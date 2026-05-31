@@ -41,6 +41,7 @@ tasks.register('jpackage', Exec) {
     File outputDir = layout.buildDirectory.dir('installer').get().asFile
     File inputDir = layout.buildDirectory.dir('libs').get().asFile
     String jarName = "${archivesName}-${version}.jar"
+    String iconPath = 'src/main/resources/sprites/icon.ico'
 
     doFirst {
         outputDir.mkdirs()
@@ -54,7 +55,7 @@ tasks.register('jpackage', Exec) {
             '--main-jar',     jarName,
             '--main-class',   application.mainClass.get(),
             '--dest',         outputDir.absolutePath,
-            '--icon',      'src/main/resources/sprites/icon.ico',
+            '--icon',         iconPath,
             '--win-menu',
             '--win-shortcut'
 }
