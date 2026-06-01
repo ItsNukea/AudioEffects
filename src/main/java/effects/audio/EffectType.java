@@ -7,6 +7,7 @@ public enum EffectType {
 	ECHO("Echo", Parameters.of(map -> {
 		map.put("delay", 0.75f);
 		map.put("exponentialDecay", 0.8f);
+		map.put("repetitions", 5);
 	})),
 	EARRAPE("Earrape", Parameters.of(map -> {
 		map.put("randomnessFactor", 1f);

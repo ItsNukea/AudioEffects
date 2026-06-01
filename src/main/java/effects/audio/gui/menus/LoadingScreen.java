@@ -1,7 +1,6 @@
 package effects.audio.gui.menus;
 
-import effects.audio.*;
-import effects.audio.Window;
+import effects.audio.EffectType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,10 +74,7 @@ public class LoadingScreen extends JPanel {
         });
     }
 
-    public static LoadingScreen get() {
-        if(!(Window.getPanel() instanceof LoadingScreen)) {
-            return null;
-        }
-        return instance;
+    public void setStatus(String newStatus, int percentage) {
+        status.setText(newStatus);
     }
 }

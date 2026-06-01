@@ -1,6 +1,7 @@
 package effects.audio.effectoperations;
 
 import effects.audio.gui.menus.LoadingScreen;
+import effects.audio.params.*;
 
 import java.io.*;
 import java.nio.channels.*;
@@ -10,6 +11,8 @@ public abstract class EffectOperation {
     private FileOutputStream fos;
     private FileChannel channel;
     private FileLock lock;
+
+    protected abstract void start(LoadingScreen screen, Parameters params);
 
     protected void lock(File file) {
         if (lock != null) {
@@ -24,7 +27,6 @@ public abstract class EffectOperation {
             throw new RuntimeException(e);
         }
     }
-
     protected void unlock() {
         if (lock == null) {
             throw new IllegalStateException("No file is currently locked");
@@ -42,6 +44,4 @@ public abstract class EffectOperation {
         channel = null;
         fos = null;
     }
-
-    protected abstract void start(LoadingScreen screen);
 }

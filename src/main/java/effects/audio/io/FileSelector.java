@@ -19,17 +19,14 @@ public class FileSelector {
 				FileChooser chooser = new FileChooser();
 				chooser.setTitle("Choose your audio file");
 
-				chooser.getExtensionFilters().add(
-						new FileChooser.ExtensionFilter(
-								"Audio files",
-								"*.wav",
-								"*.wave",
-								"*.aiff",
-								"*.au",
-								"*.mp3"
-						)
-				);
-				chooser.setInitialDirectory(Paths.get(System.getProperty("user.home"), "Downloads").toFile());
+                chooser.getExtensionFilters().add(
+                        new FileChooser.ExtensionFilter(
+                                "Audio files",
+                                "*.wav",
+                                            "*.wave"
+                        )
+                );
+                chooser.setInitialDirectory(Paths.get(System.getProperty("user.home"), "Downloads").toFile());
 
 				selectedFile.set(chooser.showOpenDialog(null));
 			} finally {

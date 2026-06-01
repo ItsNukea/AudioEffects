@@ -57,7 +57,9 @@ tasks.register('jpackage', Exec) {
             '--dest',         outputDir.absolutePath,
             '--icon',         iconPath,
             '--win-menu',
-            '--win-shortcut'
+            '--win-shortcut',
+            '--vendor',      'ItsNukea'
+
 }
 
 shadowJar.finalizedBy jpackage
