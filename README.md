@@ -1,7 +1,7 @@
 # Audio Effects
 
 Welcome to the Audio Effects page:<br>
-Audio Effects is a program that lets you perform some audio effects on .wav files. (Who could've guessed)<br>
+Audio Effects is a lightweight program that lets you perform some audio effects on .wav files. (Who could've guessed)<br>
 
 This is a project I made for school, so don't expect too much from it
 
