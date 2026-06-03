@@ -14,6 +14,13 @@ repositories {
 dependencies {
     implementation "org.slf4j:slf4j-api:$slf4j_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
+    implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'      // MP3 decoding
+    implementation 'com.googlecode.soundlibs:tritonus-share:0.3.7.4' // library for mp3spi
+}
+
+javafx {
+    version = '26'
+    modules = ['javafx.controls']
 }
 
 application {
@@ -32,19 +39,27 @@ jar {
 
 shadowJar {
     archiveFileName = "${archivesName}-${version}.jar"
+    exclude 'module-info.class'
+    exclude 'javafx/**'
+    exclude 'com/sun/javafx/**'
+    exclude 'com/sun/glass/**'
+    exclude 'com/sun/prism/**'
 }
 
 // jpackage task
 tasks.register('jpackage', Exec) {
     dependsOn shadowJar
 
-    File outputDir = layout.buildDirectory.dir('installer').get().asFile
+    File outputDir = layout.projectDirectory.dir('installer').asFile
     File inputDir = layout.buildDirectory.dir('libs').get().asFile
     String jarName = "${archivesName}-${version}.jar"
     String iconPath = 'src/main/resources/sprites/icon.ico'
 
     doFirst {
         outputDir.mkdirs()
+        delete fileTree(outputDir) {
+            include '*.exe'
+        }
     }
 
     commandLine 'jpackage',
@@ -57,18 +72,12 @@ tasks.register('jpackage', Exec) {
             '--dest',         outputDir.absolutePath,
             '--icon',         iconPath,
             '--win-menu',
-            '--win-shortcut',
+            '--win-shortcut-prompt',
             '--vendor',      'ItsNukea'
-
 }
 
 shadowJar.finalizedBy jpackage
 
 test {
     useJUnitPlatform()
-}
-
-javafx {
-    version = '25'
-    modules = [ 'javafx.controls' ]
 }

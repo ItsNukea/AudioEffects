@@ -1,47 +1,50 @@
 package effects.audio.effectoperations;
 
 import effects.audio.gui.menus.LoadingScreen;
-import effects.audio.params.*;
 
+import javax.sound.sampled.*;
 import java.io.*;
-import java.nio.channels.*;
 
 public abstract class EffectOperation {
-    protected File file;
-    private FileOutputStream fos;
-    private FileChannel channel;
-    private FileLock lock;
+    protected LoadingScreen screen;
 
-    protected abstract void start(LoadingScreen screen, Parameters params);
-
-    protected void lock(File file) {
-        if (lock != null) {
-            throw new IllegalStateException("A file is already locked");
-        }
-
-        try {
-            fos = new FileOutputStream(file);
-            channel = fos.getChannel();
-            lock = channel.lock();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    protected EffectOperation(LoadingScreen screen) {
+        this.screen = screen;
     }
-    protected void unlock() {
-        if (lock == null) {
-            throw new IllegalStateException("No file is currently locked");
-        }
 
+    protected abstract void start();
+
+    protected static File convertToPcmSignedWav(File file) {
         try {
-            lock.release();
-            channel.close();
-            fos.close();
-        } catch (IOException e) {
+            AudioInputStream mp3Stream = AudioSystem.getAudioInputStream(file);
+            AudioFormat sourceFormat = mp3Stream.getFormat();
+
+            // Step 2: Define the target PCM_SIGNED format
+            AudioFormat targetFormat = new AudioFormat(
+                    AudioFormat.Encoding.PCM_SIGNED,
+                    sourceFormat.getSampleRate(),
+                    16,
+                    sourceFormat.getChannels(),
+                    sourceFormat.getChannels() * 2,
+                    sourceFormat.getSampleRate(),
+                    false
+            );
+
+            // Step 3: Convert MP3 -> PCM via mp3spi
+            AudioInputStream pcmStream = AudioSystem.getAudioInputStream(targetFormat, mp3Stream);
+
+            // Step 4: Write directly to a .wav file
+            String filenameWithoutExtension = file.getName().substring(0, file.getName().lastIndexOf('.'));
+            File tempFile = File.createTempFile(filenameWithoutExtension, ".wav");
+            tempFile.deleteOnExit();
+            AudioSystem.write(pcmStream, AudioFileFormat.Type.WAVE, tempFile);
+            pcmStream.close();
+            mp3Stream.close();
+
+            return tempFile;
+        } catch (IOException | UnsupportedAudioFileException e) {
+            EffectOperationManager.LOGGER.error("Error converting mp3 to wav", e);
             throw new RuntimeException(e);
         }
-
-        lock = null;
-        channel = null;
-        fos = null;
     }
 }

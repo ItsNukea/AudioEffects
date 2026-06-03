@@ -2,7 +2,7 @@
 <configuration>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%cyan([%d{HH:mm:ss}]) %blue((%logger{36}\)) [%thread/%replace(%replace(%replace(%level){'INFO','Info'}){'DEBUG','Debug'}){'TRACE','Trace'}]: %highlight(%msg)\n</pattern>
+            <pattern>%cyan([%d{HH:mm:ss}]) %blue((%logger{36}\)) [%thread/%replace(%replace(%replace(%level){'INFO','INFO'}){'DEBUG','DEBUG'}){'TRACE','TRACE'}]: %highlight(%msg)\n</pattern>
         </encoder>
     </appender>
 
