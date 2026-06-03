@@ -16,4 +16,4 @@ Go to the Releases tab on the middle right of the screen or click [here](https:/
 _Congratulations!, you just installed Audio Effects_
 
 ### Via raw file
-Go to [here](https://somelinkhahathiswillprobablycrash.idc), download it, execute it and The installation wizard will guide you through the rest
+Go to [here](https://github.com/ItsNukea/AudioEffects/blob/main/installer/Audio%20Effects-1.0.exe), press 'download raw file', execute it and The installation wizard will guide you through the rest
