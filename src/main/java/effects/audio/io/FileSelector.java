@@ -23,7 +23,10 @@ public class FileSelector {
                         new FileChooser.ExtensionFilter(
                                 "Audio files",
                                 "*.wav",
-                                            "*.wave"
+                                            "*.wave",
+											"*.mp3",
+											"*.au",
+											"*.aif"
                         )
                 );
                 chooser.setInitialDirectory(Paths.get(System.getProperty("user.home"), "Downloads").toFile());

@@ -1,0 +1,17 @@
+BELANGRIJK
+
+- Hoe class.getResourceAsStream() werkt
+- super class vs sub class                          //yay
+- type casting                                      //yay
+- overriding en implementing                        //yay
+- interfaces
+- enums                                             //yay
+- exceptions en exception handling (try-catch)
+- public, protected, private                        //yay
+- static vs non-static                              //yay
+- lambda statements (anonymous functions)
+
+MINDER BELANGRIJK MAAR HANDIG
+
+- try-catch-with-resources
+- Asynchronous executing (new Thread(() -> {}))

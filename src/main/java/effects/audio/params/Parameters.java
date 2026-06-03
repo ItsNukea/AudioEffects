@@ -6,10 +6,11 @@ import java.util.*;
 
 public class Parameters implements Collection<Parameter<?>> {
     private final HashSet<Parameter<?>> parameters = new HashSet<>();
+
     private final String OPERATION_NOT_SUPPORTED = "Operation not supported";
-    private Parameters(HashMap<String, Object> map) {
-        map.forEach((key, value) -> {
-            if (!this.parameters.add(new Parameter<>(key, value))) {
+    private Parameters(HashMap<String, Object> parameterMap, HashMap<String, String> keyToPrettyNameMap) {
+        parameterMap.forEach((key, value) -> {
+            if (!this.parameters.add(new Parameter<>(key, keyToPrettyNameMap.get(key), value))) {
                 throw new DuplicateException("Duplicate parameter key: " + key);
             }
         });
@@ -17,8 +18,9 @@ public class Parameters implements Collection<Parameter<?>> {
 
     public static Parameters of(ParameterSupplier supplier) {
         HashMap<String, Object> parameters = new HashMap<>();
-        supplier.extractParameters(parameters);
-        return new Parameters(parameters);
+        HashMap<String, String> keyToPrettyNameMap = new HashMap<>();
+        supplier.extractParameters(parameters, keyToPrettyNameMap);
+        return new Parameters(parameters, keyToPrettyNameMap);
     }
 
     public Parameter<?> get(String key) {

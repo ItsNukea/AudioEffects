@@ -2,11 +2,12 @@ package effects.audio.effectoperations.operations;
 
 import effects.audio.effectoperations.EffectOperation;
 import effects.audio.gui.menus.LoadingScreen;
-import effects.audio.params.Parameters;
 
-public class EarrapeOperation extends EffectOperation {
-    public EarrapeOperation() {}
+public final class EarrapeOperation extends EffectOperation {
+    public EarrapeOperation(LoadingScreen screen) {
+        super(screen);
+    }
 
     @Override
-    public void start(LoadingScreen screen, Parameters params) {}
+    public void start() {}
 }
