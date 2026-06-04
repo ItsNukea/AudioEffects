@@ -24,7 +24,7 @@ public class PrettyProgressBarUI extends BasicProgressBarUI {
         }
 
         if (progressBar.isStringPainted()) {
-            g2.setColor(Color.WHITE);
+            g2.setColor(Color.BLACK);
             g2.setFont(progressBar.getFont());
             FontMetrics fm = g2.getFontMetrics();
             String text = progressBar.getString();

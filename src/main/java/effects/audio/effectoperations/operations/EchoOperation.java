@@ -41,7 +41,7 @@ public final class EchoOperation extends EffectOperation {
             default -> throw new UnsupportedOperationException("Unsupported audio file format: " + extension);
         }
 
-        screen.setStatus("Deleting System32...", 0);
+        screen.setStatus(0);
         try(AudioInputStream ais = AudioSystem.getAudioInputStream(file)) {
             LOGGER.info("Parsing file {} to byte array", file.toPath());
 
@@ -102,9 +102,9 @@ public final class EchoOperation extends EffectOperation {
                 for (int j = 0; j < sourceSamples; j++) {
                     int sample = decodeSample(contents, j * bytesPerSample, bytesPerSample);
                     modificationBuffer[j + sampleShift] += (int) (sample * exponentiatedAmplitude);
-                    int part = 80;
+                    int part = 90;
                     float percentage = part / (float) repetitions * i + (float) j / (float) contents.length * part / (float) repetitions;
-                    screen.setStatus("Loading the flux capacitor...", (int) percentage);
+                    screen.setStatus((int) percentage);
                 }
             }
         } catch (IndexOutOfBoundsException e) {
@@ -122,9 +122,11 @@ public final class EchoOperation extends EffectOperation {
             encodeSample(modifiedContents, i * bytesPerSample, bytesPerSample, clamped);
         }
 
-        screen.setStatus("Loading the flux capacitor...", 90);
+        screen.setStatus(95);
 
         File result = createModifiedFile();
+
+        screen.setStatus(100);
 
         OperationExecutedScreen oescreen = new OperationExecutedScreen(this, result);
         Window.setWindow(oescreen);
