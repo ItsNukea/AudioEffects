@@ -112,39 +112,11 @@ public class LoadingScreen extends JPanel {
         AtomicInteger index = new AtomicInteger(0);
         new Timer(2500, _ -> {
             ArrayList<String> list = readLoadingScreenMessages();
-            new ArrayList<>(java.util.List.of(
-                    "Loading the flux capacitor",
-                    "Deleting System32",
-                    "Applying black magic",
-                    "Dowloading Trojan Horse",
-                    "Scraping data",
-                    "Stealing passwords and crypto wallets",
-                    "Asking ChatGPT",
-                    "Preparing BSOD",
-                    "Corrupting Files",
-                    "Reverse engineering the universe",
-                    "Mining cryptocurrency on your GPU",
-                    "Uploading your browsing history",
-                    "Hacking the mainframe",
-                    "Executing Order 66",
-                    "Blaming the intern",
-                    "Googling the error message",
-                    "Scheduling unwanted updates",
-                    "Generating random excuses",
-                    "Patching with duct tape",
-                    "Formatting C:/",
-                    "Rerouting through the Pentagon",
-                    "Enabling light mode",
-                    "Waking up the IT guy",
-                    "I ran out of loading screen messages",
-                    "Yeah, I think I'm just going to start this list again"
-            ));
             if(index.get() == list.size()) {
                 index.set(0);
             }
             String suffix = "...";
             status.setText(list.get(index.get()) + suffix);
-
             index.incrementAndGet();
         }).start();
     }
