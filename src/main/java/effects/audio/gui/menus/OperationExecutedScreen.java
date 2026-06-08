@@ -1,21 +1,20 @@
 package effects.audio.gui.menus;
 
 import effects.audio.Window;
-import effects.audio.effectoperations.operations.EchoOperation;
+import effects.audio.effectoperations.EffectOperation;
 import effects.audio.gui.GuiUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 
 public class OperationExecutedScreen extends JPanel {
-    public EchoOperation operation;
+    public EffectOperation operation;
 
     private JButton downloadButton;
 
-    public OperationExecutedScreen(EchoOperation operation, File result) {
+    public OperationExecutedScreen(EffectOperation operation, File result) {
         super(new BorderLayout());
         this.operation = operation;
 

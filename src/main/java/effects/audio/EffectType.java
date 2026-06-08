@@ -13,8 +13,8 @@ public enum EffectType {
 		keyToPrettyNameMap.put("repetitions", "Echo repetitions");
 	})),
 	EARRAPE("Earrape", Parameters.of((params, keyToPrettyNameMap) -> {
-		params.put("randomnessFactor", 1f);
-		keyToPrettyNameMap.put("randomnessFactor", "Randomness factor");
+		params.put("amplifier", 2f);
+		keyToPrettyNameMap.put("amplifier", "Randomness amplifier");
 	}));
 
 	private final String prettyName;
