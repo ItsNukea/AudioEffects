@@ -4,14 +4,14 @@ BELANGRIJK
 - super class vs sub class                          //yay
 - type casting                                      //yay
 - overriding en implementing                        //yay
-- interfaces
+- interfaces                                        //yay
 - enums                                             //yay
-- exceptions en exception handling (try-catch)
+- exceptions en exception handling (try-catch)      //yay
 - public, protected, private                        //yay
 - static vs non-static                              //yay
-- lambda statements (anonymous functions)
+- lambda statements (anonymous functions)           //yay
 
 MINDER BELANGRIJK MAAR HANDIG
 
 - try-catch-with-resources
-- Asynchronous executing (new Thread(() -> {}))
+- Asynchronous executing (new Thread(() -> {}))     //yay
